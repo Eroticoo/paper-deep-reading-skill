@@ -10,6 +10,18 @@
 - 仿真 / 实验部分的对比图、表格与简要说明
 - 最终 `report.md + images/` 交付
 
+## 中文介绍
+
+这是一个专门为学术论文精读场景设计的 Codex skill。它的目标不是只做普通摘要，而是从论文原文 PDF 中直接提取技术证据，包括标题抬头、定理、引理、假设、性质、备注、系统模型、仿真图和结果表，并将这些内容组织成一份适合继续修改、发布或沉淀的 `report.md`。
+
+对于控制方向论文，这个 skill 会特别关注系统公式链条、定理依赖关系、假设条件、仿真对比图以及最终的工程解释。输出结果默认保留 `report.md + images/`，并支持把图片链接重写成 GitHub CDN 或其他公网图床地址，方便后续粘贴到公众号、笔记系统或仓库文档中。
+
+## English Overview
+
+`paper-deep-reading` is a Codex skill for deep reading local academic PDFs and turning them into screenshot-backed Markdown reports. It is designed for users who need more than a plain summary: the skill extracts source-grounded technical evidence directly from the PDF, including the title header, theorem-like blocks, assumptions, properties, remarks, system-model equations, simulation figures, and result tables.
+
+It is especially useful for control, estimation, filtering, and observer-design papers. The skill emphasizes theorem dependency chains, LaTeX transcription of core system equations, comparison-focused simulation analysis, and a final deliverable built around `report.md + images/`. It also supports rewriting image links into public GitHub CDN or other hosted URLs for publishing workflows.
+
 ## 仓库结构
 
 ```text
