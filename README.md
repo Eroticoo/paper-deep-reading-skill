@@ -1,19 +1,19 @@
-# paper-deep-reading-skill
+# paper-deep-reading
 
-`paper-deep-reading` 是一个用于深度阅读本地学术 PDF 的 Codex skill，目标不是只输出一段普通摘要，而是生成**带截图证据、可继续加工和发布的 Markdown 报告**。
+`paper-deep-reading` 是一个用于深度阅读本地学术 PDF 的 Codex skill。它的目标不是只输出一段普通摘要，而是生成**带截图证据、可继续加工和发布的 Markdown 报告**。
 
 ## 当前状态
 
 **本仓库当前只面向 Windows 用户维护和发布。**
 
-默认工作流按以下环境编写和测试：
+默认工作环境：
 
 - `Windows 10 / Windows 11`
-- `PowerShell 5.1+` 或 `PowerShell 7+`
 - `Python 3.10+`
 - `Codex CLI`
 
-如果你现在使用的是 macOS 或 Linux，这个仓库暂时不保证开箱即用。
+这套仓库现在已经整理成：**仓库根目录本身就是 skill 目录。**  
+也就是说，别人不需要再额外执行安装脚本，**直接 clone 到 Codex 的 skills 目录里就能安装这个 skill。**
 
 ## 这个 skill 能做什么
 
@@ -37,18 +37,70 @@
 ## 仓库结构
 
 ```text
-paper-deep-reading-skill/
+paper-deep-reading/
 +-- README.md
-+-- install-windows.ps1
-\-- paper-deep-reading/
-    +-- SKILL.md
-    +-- openai.yaml
-    +-- agents/openai.yaml
-    +-- references/
-    \-- scripts/
++-- SKILL.md
++-- openai.yaml
++-- agents/
++-- references/
+\-- scripts/
 ```
 
-真正的 skill 内容在 [paper-deep-reading](./paper-deep-reading/) 目录下。
+## 下载安装
+
+### 最推荐的安装方式：直接 clone 到 Codex skills 目录
+
+**这是当前最推荐的安装方式。**
+
+如果你使用默认 Codex skills 目录，请直接执行：
+
+```powershell
+git clone https://github.com/Eroticoo/paper-deep-reading-skill.git "%USERPROFILE%\.codex\skills\paper-deep-reading"
+```
+
+如果你使用的是自定义 `CODEX_HOME`，请执行：
+
+```powershell
+git clone https://github.com/Eroticoo/paper-deep-reading-skill.git "%CODEX_HOME%\skills\paper-deep-reading"
+```
+
+**执行完这一步，skill 文件本体就已经安装到位了。**
+
+### 第二步：安装 Python 依赖
+
+**安装完 skill 目录后，还需要安装 Python 依赖。**
+
+必需依赖安装命令：
+
+```powershell
+python -m pip install --upgrade pymupdf pillow
+```
+
+如果你要处理扫描版 PDF，建议再安装：
+
+```powershell
+python -m pip install --upgrade pytesseract
+```
+
+### 不想用 git 也可以
+
+如果你不想用 `git clone`，也可以：
+
+1. 从 GitHub 下载 zip
+2. 解压后把整个仓库根目录重命名为 `paper-deep-reading`
+3. 放到：
+
+```text
+%USERPROFILE%\.codex\skills\
+```
+
+或者：
+
+```text
+%CODEX_HOME%\skills\
+```
+
+然后再执行上面的 `pip install` 依赖命令即可。
 
 ## 环境要求
 
@@ -106,7 +158,7 @@ python --version
 py -3 --version
 ```
 
-### 4. Python 依赖
+### 4. Python 依赖说明
 
 **必需依赖：**
 
@@ -117,84 +169,6 @@ py -3 --version
 
 - `pytesseract`
 - Windows 上单独安装的 `Tesseract OCR`
-
-仓库自带的一键安装脚本会自动安装必需 Python 包。
-
-## 下载安装
-
-### 一键安装
-
-**如果你已经装好了 Node.js、Codex CLI 和 Python，那么最推荐直接用下面这一组命令完成安装：**
-
-```powershell
-git clone https://github.com/Eroticoo/paper-deep-reading-skill.git
-cd paper-deep-reading-skill
-powershell -ExecutionPolicy Bypass -File .\install-windows.ps1
-```
-
-**这是最推荐的安装方式。**
-
-安装脚本会自动完成：
-
-- 找到你的 Codex skills 目录
-- 把 `paper-deep-reading/` 复制到正确位置
-- 安装 `pymupdf` 和 `pillow`
-- 输出最终安装路径
-
-如果你还想顺便安装 OCR 的 Python 包：
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\install-windows.ps1 -InstallOptionalOcrDeps
-```
-
-如果你想强制覆盖旧版本：
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\install-windows.ps1 -Force
-```
-
-**默认情况下，如果系统里已有旧版 skill，脚本会先做一个带时间戳的备份，再安装新版。**
-
-### 手动安装
-
-如果你不想走安装脚本，也可以手动安装。
-
-**第一步：把 [paper-deep-reading](./paper-deep-reading/) 复制到你的 Codex skills 目录。**
-
-默认目录：
-
-```text
-%USERPROFILE%\.codex\skills\
-```
-
-如果你使用 `CODEX_HOME`：
-
-```text
-%CODEX_HOME%\skills\
-```
-
-**第二步：安装 Python 依赖。**
-
-```powershell
-python -m pip install --upgrade pymupdf pillow
-```
-
-如果你还要 OCR 支持：
-
-```powershell
-python -m pip install --upgrade pytesseract
-```
-
-**第三步：检查最终目录结构。**
-
-```text
-%USERPROFILE%\.codex\skills\paper-deep-reading\
-+-- SKILL.md
-+-- openai.yaml
-+-- agents/openai.yaml
-+-- references\
-\-- scripts\
-```
 
 ## OCR 可选配置
 
@@ -213,7 +187,7 @@ python -m pip install --upgrade pytesseract
 
 ```powershell
 cd %USERPROFILE%\.codex\skills\paper-deep-reading
-.\scripts\pdf_tool.ps1
+python .\scripts\pdf_tool.py
 ```
 
 如果看到 usage 输出，而不是缺依赖报错，就说明基础安装基本成功。
@@ -261,10 +235,9 @@ https://cdn.jsdelivr.net/gh/<owner>/<repo>@<commit>/<slug>/images
 ## 给仓库访问者的说明
 
 - 这是一个 **skill 仓库**，不是单一 prompt 文件
-- `paper-deep-reading/scripts/` 下的辅助脚本属于安装内容的一部分
+- `scripts/` 下的辅助脚本属于 skill 的一部分
 - 当前 README 明确按 Windows-first 发布
 
 ## 参考链接
 
 - Codex CLI 官方仓库：https://github.com/openai/codex
-- 本仓库中的 skill 主体：[paper-deep-reading](./paper-deep-reading/)
