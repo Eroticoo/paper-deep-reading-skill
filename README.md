@@ -4,7 +4,9 @@
 
 ## 当前状态
 
-**本仓库当前只面向 Windows 用户维护和发布。**
+**本仓库当前以 Windows 为正式支持平台。**
+
+**mac 用户在安装好 Python 依赖后，通常也可以使用核心 Python 脚本，但目前仓库还没有把 mac 作为正式发布和完整验证的平台。**
 
 默认工作环境：
 
@@ -73,19 +75,21 @@ https://github.com/Eroticoo/paper-deep-reading-skill
 
 **这是当前最推荐的安装方式。**
 
-如果你使用默认 Codex skills 目录，请直接执行：
+如果你是 Windows 用户，并且使用默认 Codex skills 目录，请直接执行：
 
 ```powershell
 git clone https://github.com/Eroticoo/paper-deep-reading-skill.git "%USERPROFILE%\.codex\skills\paper-deep-reading"
 ```
 
-如果你使用的是自定义 `CODEX_HOME`，请执行：
+如果你是 Windows 用户，并且使用的是自定义 `CODEX_HOME`，请执行：
 
 ```powershell
 git clone https://github.com/Eroticoo/paper-deep-reading-skill.git "%CODEX_HOME%\skills\paper-deep-reading"
 ```
 
 **执行完这一步，skill 文件本体就已经安装到位了。**
+
+如果你是 mac 用户，对应思路也是一样的：把这个仓库直接 clone 到你的 Codex skills 目录，并把目录名命名为 `paper-deep-reading`。只是当前 README 的命令示例默认按 Windows 路径来写。
 
 ### 第二步：安装 Python 依赖
 
@@ -191,6 +195,14 @@ py -3 --version
 - `pytesseract`
 - Windows 上单独安装的 `Tesseract OCR`
 
+对于 mac 用户，如果你走的是核心 Python 路径，依赖仍然是同一套：
+
+- `pymupdf`
+- `pillow`
+- 可选：`pytesseract`
+
+也就是说，**mac 真正需要的是 Python 依赖，不是 Windows 专用脚本。**
+
 ## OCR 可选配置
 
 对于自带文本层的 PDF，`PyMuPDF` 通常已经足够。
@@ -212,6 +224,28 @@ python .\scripts\pdf_tool.py
 ```
 
 如果看到 usage 输出，而不是缺依赖报错，就说明基础安装基本成功。
+
+如果你是 mac 用户，更推荐直接运行：
+
+```bash
+python3 ./scripts/pdf_tool.py
+```
+
+如果能看到 usage 输出，而不是缺依赖报错，就说明核心 Python 路径可以工作。
+
+## 哪些脚本是 Windows 专用，哪些不是
+
+当前仓库里：
+
+- `scripts/pdf_tool.ps1` 是 **Windows / PowerShell 专用包装器**
+- `scripts/pdf_snapshot.swift` 是 **Apple 平台 fallback**
+- `scripts/pdf_tool.py`、`scripts/init_output_folder.py`、`scripts/render_wechat_paste.py`、`scripts/validate_report.py` 这些核心脚本本质上都是 **跨平台 Python 脚本**
+
+所以更准确地说：
+
+- **Windows 是当前正式支持平台**
+- **mac 可以试验性使用核心 Python 路径**
+- **仓库不是“只能在 Windows 上运行”，而是“当前只把 Windows 当作正式支持对象”**
 
 ## 在 Codex 中如何调用
 
@@ -257,7 +291,8 @@ https://cdn.jsdelivr.net/gh/<owner>/<repo>@<commit>/<slug>/images
 
 - 这是一个 **skill 仓库**，不是单一 prompt 文件
 - `scripts/` 下的辅助脚本属于 skill 的一部分
-- 当前 README 明确按 Windows-first 发布
+- 当前 README 按 Windows-first 发布
+- mac 用户可以优先尝试 `python3 ./scripts/pdf_tool.py` 这条核心 Python 路径
 
 ## 参考链接
 
